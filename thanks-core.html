@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Book your call · The New Standard</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- ===== META PIXEL — replace YOUR_PIXEL_ID ===== -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','YOUR_PIXEL_ID');
+fbq('track','PageView');
+fbq('trackCustom','Lead_CORE',{content_name:'TNS CORE',content_category:'application',tier:'core'});
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></noscript>
+<!-- ===== /META PIXEL ===== -->
+
+<style>
+  :root{ --ink:#0A0A0A; --paper:#FAFAFA; --accent:#FAFAFA; --g1:#BFBFBF; --g2:#8A8A8A; --line:rgba(250,250,250,.14); }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{ height:100%; background:var(--ink); color:var(--paper); }
+  body{ font-family:"Archivo",system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+  .frame{ position:fixed; inset:18px; border:1px solid var(--line); pointer-events:none; }
+  .wrap{ min-height:100%; display:flex; flex-direction:column; padding:48px clamp(22px,6vw,80px); }
+  .bar{ display:flex; align-items:center; justify-content:space-between; }
+  .bar img{ height:22px; }
+  .status{ font-family:"Space Mono",monospace; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--g2); }
+  .status .dot{ display:inline-block; width:6px; height:6px; border-radius:50%; background:rgba(250,250,250,.7); margin-right:7px; vertical-align:middle; }
+  .core{ flex:1; display:flex; flex-direction:column; justify-content:center; max-width:900px; }
+  .kick{ font-family:"Space Mono",monospace; font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--accent); margin-bottom:20px; }
+  h1{ font-weight:800; font-size:clamp(2.3rem,6vw,4.6rem); line-height:1.0; letter-spacing:-.02em; text-transform:uppercase; }
+  h1 .dim{ color:rgba(250,250,250,.4); }
+  .lede{ color:var(--g1); font-size:clamp(1rem,2vw,1.2rem); line-height:1.55; margin-top:26px; max-width:56ch; }
+  .cta{ display:inline-flex; align-items:center; gap:12px; margin-top:36px; background:var(--paper); color:#0A0A0A;
+    font-family:"Space Mono",monospace; text-transform:uppercase; letter-spacing:.14em; font-weight:700; font-size:.85rem; padding:18px 30px; text-decoration:none; transition:.2s; width:fit-content; }
+  .cta:hover{ background:transparent; color:var(--paper); box-shadow:inset 0 0 0 1px var(--paper); }
+  .sub{ font-family:"Space Mono",monospace; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--g2); margin-top:18px; }
+  /* Calendly slot */
+  .cal{ margin-top:30px; border:1px solid var(--line); min-height:0; }
+  .foot{ font-family:"Space Mono",monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:rgba(250,250,250,.3); margin-top:30px; }
+  @media (max-width:640px){ .frame{ inset:12px; } .wrap{ padding:34px 22px; } }
+</style>
+</head>
+<body>
+<div class="frame"></div>
+<div class="wrap">
+  <div class="bar">
+    <img src="./public/logos/wordmark.png" alt="The New Standard">
+    <div class="status"><span class="dot"></span>Application received</div>
+  </div>
+
+  <div class="core">
+    <div class="kick">Intake 001 · One step left</div>
+    <h1>Let&rsquo;s talk<span class="dim">, <span id="nm">.</span></span></h1>
+    <p class="lede">Based on where you are, you are in the zone where the real transformation happens. The next step is a short call so we can understand your business, your bottleneck, and whether the room is the right fit, both ways. Book a time below.</p>
+
+    <a class="cta" href="https://calendly.com/" target="_blank" rel="noopener">Book your strategy call <span>&rarr;</span></a>
+    <div class="sub">15 minutes · No pitch · Spots for Intake 001 are limited</div>
+
+    <!-- Replace the link above with your real Calendly URL, or embed it here:
+    <div class="calendly-inline-widget cal" data-url="https://calendly.com/your-handle/tns-call" style="height:640px"></div>
+    <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+    -->
+  </div>
+
+  <div class="foot">The New Standard · Intake 001</div>
+</div>
+<script>
+  const n = new URLSearchParams(location.search).get('n');
+  document.getElementById('nm').textContent = n ? (n + '.') : 'founder.';
+</script>
+</body>
+</html>

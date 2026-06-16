@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Apply · The New Standard</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- ===== META PIXEL — replace YOUR_PIXEL_ID ===== -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','YOUR_PIXEL_ID');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></noscript>
+<!-- ===== /META PIXEL ===== -->
+
+<style>
+  :root{ --ink:#0A0A0A; --paper:#FAFAFA; --accent:#FAFAFA; --g1:#BFBFBF; --g2:#8A8A8A; --line:rgba(250,250,250,.14); }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{ height:100%; background:var(--ink); color:var(--paper); }
+  body{ font-family:"Archivo",system-ui,sans-serif; -webkit-font-smoothing:antialiased; overflow:hidden; }
+  .mono{ font-family:"Space Mono",monospace; letter-spacing:.16em; text-transform:uppercase; }
+
+  .frame{ position:fixed; inset:18px; border:1px solid var(--line); pointer-events:none; z-index:2; }
+  .stage{ position:fixed; inset:0; display:flex; flex-direction:column; padding:48px clamp(22px,6vw,80px); z-index:3; }
+
+  /* top bar */
+  .bar{ display:flex; align-items:center; justify-content:space-between; flex:none; }
+  .bar .brand{ display:flex; align-items:center; gap:12px; }
+  .bar .brand img{ height:22px; }
+  .bar .status{ font-family:"Space Mono",monospace; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--g2); }
+  .bar .status .dot{ display:inline-block; width:6px; height:6px; border-radius:50%; background:rgba(250,250,250,.7); margin-right:7px; vertical-align:middle; }
+
+  /* progress */
+  .prog{ flex:none; margin-top:26px; }
+  .prog .meta{ display:flex; justify-content:space-between; font-family:"Space Mono",monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--g2); margin-bottom:9px; }
+  .prog .track{ height:2px; background:rgba(250,250,250,.12); position:relative; overflow:hidden; }
+  .prog .fill{ position:absolute; left:0; top:0; bottom:0; width:10%; background:var(--paper); transition:width .5s cubic-bezier(.6,.01,.05,1); }
+
+  /* question area */
+  .area{ flex:1; display:flex; align-items:center; }
+  .step{ width:100%; max-width:760px; display:none; }
+  .step.on{ display:block; animation:rise .5s cubic-bezier(.2,.7,.2,1); }
+  @keyframes rise{ from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:none;} }
+
+  .kick{ font-family:"Space Mono",monospace; font-size:12px; letter-spacing:.22em; text-transform:uppercase; color:var(--accent); margin-bottom:18px; }
+  .q{ font-weight:800; font-size:clamp(1.9rem,4.6vw,3.3rem); line-height:1.02; letter-spacing:-.015em; }
+  .q .dim{ color:rgba(250,250,250,.4); }
+  .hint{ color:var(--g1); font-size:clamp(.95rem,1.6vw,1.05rem); margin-top:16px; max-width:48ch; line-height:1.5; }
+
+  /* options */
+  .opts{ margin-top:30px; display:grid; gap:11px; max-width:620px; }
+  .opt{ display:flex; align-items:center; gap:16px; width:100%; text-align:left; background:rgba(250,250,250,.03);
+    border:1px solid var(--line); color:var(--paper); padding:18px 20px; cursor:pointer; transition:.18s; font-size:1.05rem; }
+  .opt:hover{ background:rgba(250,250,250,.08); border-color:rgba(250,250,250,.4); transform:translateX(4px); }
+  .opt .k{ font-family:"Space Mono",monospace; font-size:12px; color:var(--g2); border:1px solid var(--line); width:26px; height:26px; display:flex; align-items:center; justify-content:center; flex:none; }
+  .opt:hover .k{ color:var(--paper); border-color:var(--paper); }
+
+  /* text + contact inputs */
+  .field{ margin-top:28px; max-width:560px; }
+  .field input, .field textarea{ width:100%; background:transparent; border:0; border-bottom:1px solid var(--line);
+    color:var(--paper); font-family:"Archivo"; font-size:1.5rem; padding:12px 0; outline:none; }
+  .field textarea{ resize:none; line-height:1.4; }
+  .field input:focus, .field textarea:focus{ border-color:var(--paper); }
+  .field input::placeholder, .field textarea::placeholder{ color:rgba(250,250,250,.28); }
+  /* neutralize browser/password-manager autofill so fields stay transparent on-brand */
+  input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active,
+  textarea:-webkit-autofill, select:-webkit-autofill, .cc:-webkit-autofill{
+    -webkit-text-fill-color: var(--paper) !important;
+    -webkit-box-shadow: 0 0 0 1000px var(--ink) inset !important;
+    box-shadow: 0 0 0 1000px var(--ink) inset !important;
+    caret-color: var(--paper);
+    transition: background-color 9999s ease-in-out 0s; }
+  .grid2{ display:grid; gap:24px; max-width:560px; margin-top:28px; }
+  /* phone + country code */
+  .phonewrap{ display:flex; gap:16px; align-items:flex-end; }
+  .cc{ flex:none; width:118px; background:transparent; border:0; border-bottom:1px solid var(--line);
+    color:var(--paper); font-family:"Archivo"; font-size:1.5rem; padding:12px 0; outline:none; cursor:pointer;
+    -webkit-appearance:none; appearance:none; }
+  .cc:focus{ border-color:var(--paper); }
+  .cc option{ background:#0A0A0A; color:var(--paper); font-size:1rem; }
+  .phonewrap input{ flex:1; min-width:0; }
+  /* instagram */
+  .ig{ display:flex; align-items:center; border-bottom:1px solid var(--line); }
+  .ig:focus-within{ border-color:var(--paper); }
+  .ig .at{ font-family:"Archivo"; font-size:1.5rem; color:rgba(250,250,250,.4); padding:12px 0; flex:none; }
+  .ig input{ border-bottom:0 !important; padding-left:4px; }
+
+  /* CTA */
+  .next{ display:inline-flex; align-items:center; gap:12px; margin-top:38px; background:var(--paper); color:#0A0A0A;
+    font-family:"Space Mono",monospace; text-transform:uppercase; letter-spacing:.14em; font-weight:700; font-size:.82rem;
+    padding:16px 26px; border:0; cursor:pointer; transition:.2s; }
+  .next:hover{ background:transparent; color:var(--paper); box-shadow:inset 0 0 0 1px var(--paper); }
+  .next[disabled]{ opacity:.35; cursor:not-allowed; }
+  .next .ar{ font-family:"Archivo"; font-weight:800; }
+  .enterhint{ font-family:"Space Mono",monospace; font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--g2); margin-left:14px; }
+
+  /* footer / back */
+  .foot{ flex:none; display:flex; align-items:center; justify-content:space-between; }
+  .back{ background:none; border:0; color:var(--g2); font-family:"Space Mono",monospace; font-size:11px; letter-spacing:.16em; text-transform:uppercase; cursor:pointer; padding:8px 0; }
+  .back:hover{ color:var(--paper); } .back.hide{ visibility:hidden; }
+  .foot .legal{ font-family:"Space Mono",monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:rgba(250,250,250,.3); }
+
+  /* submitting */
+  #sending{ position:fixed; inset:0; background:var(--ink); display:none; align-items:center; justify-content:center; z-index:9; }
+  #sending.on{ display:flex; }
+  #sending .t{ font-family:"Space Mono",monospace; letter-spacing:.22em; text-transform:uppercase; color:var(--g1); font-size:13px; }
+
+  @media (max-width:640px){
+    .stage{ padding:34px 22px; } .frame{ inset:12px; }
+    .opt{ padding:15px 16px; font-size:.98rem; } .grid2{ grid-template-columns:1fr !important; }
+  }
+</style>
+</head>
+<body>
+<div class="frame"></div>
+
+<div class="stage">
+  <!-- top -->
+  <div class="bar">
+    <div class="brand"><img src="./public/logos/wordmark.png" alt="The New Standard"></div>
+    <div class="status"><span class="dot"></span>Intake 001 · Selection open</div>
+  </div>
+
+  <!-- progress -->
+  <div class="prog">
+    <div class="meta"><span id="pStep">Application</span><span id="pPct">10%</span></div>
+    <div class="track"><div class="fill" id="pFill"></div></div>
+  </div>
+
+  <!-- questions -->
+  <div class="area"><div id="form"></div></div>
+
+  <!-- footer -->
+  <div class="foot">
+    <button class="back hide" id="back" type="button">&larr; Back</button>
+    <div class="legal">By application · Replies within 48h</div>
+  </div>
+</div>
+
+<div id="sending"><div class="t">Reviewing your application…</div></div>
+
+<script>
+/* ============================================================
+   CONFIG — fill these in
+   ============================================================ */
+const WEB3FORMS_KEY = '';     // <-- paste your free Web3Forms access key (web3forms.com). Empty = skip sending, still routes + fires pixel.
+const NOTIFY_LABEL  = 'TNS Application';
+/* ============================================================ */
+
+const STEPS = [
+  { type:'intro' },
+  { id:'stage', type:'choice', kick:'01 · Where you are',
+    q:'What are you building right now?',
+    options:[
+      {v:'employed',   label:'I have a 9 to 5 (thinking about starting)'},
+      {v:'juststarted',label:'I just started my first business'},
+      {v:'fulltime',   label:'I work full time on my business'},
+      {v:'established', label:'I run an established business'} ] },
+  { id:'revenue', type:'choice', kick:'02 · The numbers',
+    q:'What does it make per month, honestly?',
+    hint:'No judgement. This just helps us put you in the right room.',
+    options:[
+      {v:'r0',      label:'Nothing yet / side income'},
+      {v:'r1to5',   label:'€1k – €5k'},
+      {v:'r5to15',  label:'€5k – €15k'},
+      {v:'r15to25', label:'€15k – €25k'},
+      {v:'r25plus', label:'€25k+'} ] },
+  { id:'bottleneck', type:'choice', kick:'03 · The real problem',
+    q:'What is actually holding you back?',
+    options:[
+      {v:'discipline',label:'Discipline, consistency, doing it alone'},
+      {v:'sales',     label:'Leads, sales, making it consistent'},
+      {v:'identity',  label:'Mindset, beliefs, the man I am being'},
+      {v:'room',      label:'I need a higher-level room around me'} ] },
+  { id:'vision', type:'text', kick:'04 · The next 12 months',
+    q:'Who do you want to become?',
+    hint:'One or two sentences. The clearer you are, the better the fit.',
+    placeholder:'In 12 months I will be the kind of man who…', long:true, optional:true },
+  { id:'commit', type:'choice', kick:'05 · The honest answer',
+    q:'How committed are you to changing yourself, even when it gets uncomfortable?',
+    options:[
+      {v:'curious', label:'Just curious for now'},
+      {v:'ready',   label:'Ready to change, if it stays comfortable'},
+      {v:'allin',   label:'All in. I will do the uncomfortable work'} ] },
+  { id:'contact', type:'contact', kick:'06 · Last step',
+    q:'Where do we reach you?',
+    hint:'Our team reviews every application by hand and replies within 48 hours.' }
+];
+
+// Country dial codes — Netherlands default, then common markets, then A–Z
+const COUNTRY_CODES = [
+  {c:'NL',d:'+31'},{c:'BE',d:'+32'},{c:'DE',d:'+49'},{c:'GB',d:'+44'},{c:'US',d:'+1'},
+  {c:'FR',d:'+33'},{c:'ES',d:'+34'},{c:'IT',d:'+39'},{c:'PT',d:'+351'},{c:'CH',d:'+41'},
+  {c:'AT',d:'+43'},{c:'IE',d:'+353'},{c:'SE',d:'+46'},{c:'NO',d:'+47'},{c:'DK',d:'+45'},
+  {c:'FI',d:'+358'},{c:'PL',d:'+48'},{c:'CZ',d:'+420'},{c:'GR',d:'+30'},{c:'RO',d:'+40'},
+  {c:'CA',d:'+1'},{c:'AU',d:'+61'},{c:'NZ',d:'+64'},{c:'AE',d:'+971'},{c:'SA',d:'+966'},
+  {c:'ZA',d:'+27'},{c:'BR',d:'+55'},{c:'MX',d:'+52'},{c:'AR',d:'+54'},{c:'IN',d:'+91'},
+  {c:'SG',d:'+65'},{c:'HK',d:'+852'},{c:'JP',d:'+81'},{c:'TR',d:'+90'},{c:'IL',d:'+972'},
+  {c:'OTHER',d:'+'}
+];
+
+const answers = {};
+let i = 0;
+const form = document.getElementById('form');
+const fill = document.getElementById('pFill');
+const pStep = document.getElementById('pStep');
+const pPct = document.getElementById('pPct');
+const backBtn = document.getElementById('back');
+
+function progress(){
+  const total = STEPS.length - 1;            // exclude intro
+  const done  = Math.max(0, i);
+  const pct   = Math.round(10 + (done/total)*90);   // endowed progress: starts at 10%
+  fill.style.width = pct + '%';
+  pPct.textContent = pct + '%';
+  pStep.textContent = i===0 ? 'Application' : ('Step ' + i + ' of ' + total);
+  backBtn.classList.toggle('hide', i<=1);
+}
+
+function render(){
+  const s = STEPS[i];
+  let html = '<div class="step on">';
+
+  if(s.type==='intro'){
+    html += `
+      <div class="kick">Intake 001 · Limited selection</div>
+      <h1 class="q">This is an application,<br><span class="dim">not a sign-up.</span></h1>
+      <p class="hint">We are selective on purpose. The room is the product, so we protect who is in it. Six quick questions, about 90 seconds. If it is a fit, we reply within 48 hours.</p>
+      <button class="next" id="go">Begin application <span class="ar">&rarr;</span></button>`;
+  }
+
+  if(s.type==='choice'){
+    html += `<div class="kick">${s.kick}</div><h2 class="q">${s.q}</h2>`;
+    if(s.hint) html += `<p class="hint">${s.hint}</p>`;
+    html += '<div class="opts">';
+    s.options.forEach((o,idx)=>{
+      const key = String.fromCharCode(65+idx);
+      html += `<button class="opt" data-v="${o.v}"><span class="k">${key}</span><span>${o.label}</span></button>`;
+    });
+    html += '</div>';
+  }
+
+  if(s.type==='text'){
+    html += `<div class="kick">${s.kick}</div><h2 class="q">${s.q}</h2>`;
+    if(s.hint) html += `<p class="hint">${s.hint}</p>`;
+    html += `<div class="field"><textarea id="f_${s.id}" rows="2" placeholder="${s.placeholder||''}">${answers[s.id]||''}</textarea></div>
+      <button class="next" id="go">Continue <span class="ar">&rarr;</span></button>`;
+  }
+
+  if(s.type==='contact'){
+    html += `<div class="kick">${s.kick}</div><h2 class="q">${s.q}</h2>`;
+    if(s.hint) html += `<p class="hint">${s.hint}</p>`;
+    const ccOpts = COUNTRY_CODES.map(o=>`<option value="${o.d}" ${ (answers.cc||'+31')===o.d ? 'selected':'' }>${o.c} ${o.d}</option>`).join('');
+    html += `
+      <div class="grid2">
+        <div class="field" style="margin-top:0"><input id="f_name" type="text" placeholder="First name" value="${answers.name||''}"></div>
+        <div class="field" style="margin-top:0"><input id="f_email" type="email" placeholder="Email" value="${answers.email||''}"></div>
+      </div>
+      <div class="field">
+        <div class="phonewrap">
+          <select id="f_cc" class="cc" aria-label="Country code">${ccOpts}</select>
+          <input id="f_phone" type="tel" inputmode="tel" placeholder="Phone number" value="${answers.phone||''}">
+        </div>
+      </div>
+      <div class="field">
+        <div class="ig"><span class="at">@</span><input id="f_ig" type="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Instagram username (optional)" value="${answers.instagram||''}"></div>
+      </div>
+      <button class="next" id="go" disabled>Submit application <span class="ar">&rarr;</span></button>`;
+  }
+
+  html += '</div>';
+  form.innerHTML = html;
+  progress();
+  wire();
+}
+
+function wire(){
+  const s = STEPS[i];
+  const go = document.getElementById('go');
+
+  if(s.type==='intro' && go){ go.onclick = advance; }
+
+  if(s.type==='choice'){
+    form.querySelectorAll('.opt').forEach(btn=>{
+      btn.onclick = ()=>{ answers[s.id] = btn.dataset.v; advance(); };
+    });
+  }
+
+  if(s.type==='text' && go){
+    go.onclick = ()=>{ answers[s.id] = document.getElementById('f_'+s.id).value.trim(); advance(); };
+  }
+
+  if(s.type==='contact'){
+    const n=document.getElementById('f_name'), e=document.getElementById('f_email'),
+          cc=document.getElementById('f_cc'), ph=document.getElementById('f_phone'),
+          ig=document.getElementById('f_ig');
+    const phoneDigits=()=> ph.value.replace(/\D/g,'');
+    const valid=()=> n.value.trim() && /\S+@\S+\.\S+/.test(e.value.trim()) && phoneDigits().length>=6;
+    const check=()=>{ go.disabled = !valid(); };
+    [n,e,ph].forEach(el=>el.addEventListener('input',check));
+    go.onclick = ()=>{
+      if(!valid())return;
+      answers.name=n.value.trim();
+      answers.email=e.value.trim();
+      answers.cc=cc.value;
+      answers.phone=ph.value.trim();
+      answers.phone_full=(cc.value+' '+ph.value.trim()).trim();
+      const user=ig.value.trim().replace(/^@+/,'');
+      answers.instagram= user ? '@'+user : '';
+      submit();
+    };
+    check();
+  }
+}
+
+function advance(){ if(i < STEPS.length-1){ i++; render(); } }
+backBtn.onclick = ()=>{ if(i>1){ i--; render(); } };
+
+// keyboard: A-D selects, Enter advances
+document.addEventListener('keydown', ev=>{
+  const s = STEPS[i];
+  if(s.type==='choice'){
+    const k = ev.key.toUpperCase().charCodeAt(0)-65;
+    if(k>=0 && k<s.options.length){ answers[s.id]=s.options[k].v; advance(); }
+  }
+  if(ev.key==='Enter'){ const go=document.getElementById('go'); if(go && !go.disabled) go.click(); }
+});
+
+/* ===== tier logic — adjust thresholds here ===== */
+function decideTier(a){
+  if(a.stage==='established' || a.revenue==='r15to25' || a.revenue==='r25plus') return 'elite';
+  if(a.stage==='fulltime'    || a.revenue==='r5to15')  return 'core';
+  return 'lite';
+}
+
+function submit(){
+  const tier = decideTier(answers);
+  answers.tier = tier;
+  sessionStorage.setItem('tns_app', JSON.stringify(answers));
+  document.getElementById('sending').classList.add('on');
+
+  const done = ()=> location.href = 'thanks-' + tier + '.html?n=' + encodeURIComponent(answers.name||'');
+
+  if(WEB3FORMS_KEY){
+    fetch('https://api.web3forms.com/submit',{
+      method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body: JSON.stringify({ access_key:WEB3FORMS_KEY, subject:NOTIFY_LABEL+' — '+tier.toUpperCase(),
+        from_name:'TNS Apply', recommended_tier:tier, ...answers })
+    }).then(()=>setTimeout(done,700)).catch(()=>setTimeout(done,700));
+  } else {
+    setTimeout(done, 900);   // no endpoint yet — still routes + fires pixel
+  }
+}
+
+render();
+</script>
+</body>
+</html>

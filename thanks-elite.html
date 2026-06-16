@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Under review · The New Standard</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- ===== META PIXEL — replace YOUR_PIXEL_ID ===== -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','YOUR_PIXEL_ID');
+fbq('track','PageView');
+fbq('trackCustom','Lead_ELITE',{content_name:'TNS ELITE',content_category:'application',tier:'elite'});
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></noscript>
+<!-- ===== /META PIXEL ===== -->
+
+<style>
+  :root{ --ink:#0A0A0A; --paper:#FAFAFA; --accent:#FAFAFA; --g1:#BFBFBF; --g2:#8A8A8A; --line:rgba(250,250,250,.14); }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{ height:100%; background:var(--ink); color:var(--paper); }
+  body{ font-family:"Archivo",system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+  .frame{ position:fixed; inset:18px; border:1px solid var(--line); pointer-events:none; }
+  .wrap{ min-height:100%; display:flex; flex-direction:column; padding:48px clamp(22px,6vw,80px); }
+  .bar{ display:flex; align-items:center; justify-content:space-between; }
+  .bar img{ height:22px; }
+  .status{ font-family:"Space Mono",monospace; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--g2); }
+  .status .dot{ display:inline-block; width:6px; height:6px; border-radius:50%; background:rgba(250,250,250,.7); margin-right:7px; vertical-align:middle; }
+  .core{ flex:1; display:flex; flex-direction:column; justify-content:center; max-width:900px; }
+  .kick{ font-family:"Space Mono",monospace; font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--accent); margin-bottom:20px; }
+  h1{ font-weight:800; font-size:clamp(2.3rem,6vw,4.6rem); line-height:1.0; letter-spacing:-.02em; text-transform:uppercase; }
+  h1 .dim{ color:rgba(250,250,250,.4); }
+  .lede{ color:var(--g1); font-size:clamp(1rem,2vw,1.2rem); line-height:1.55; margin-top:26px; max-width:56ch; }
+  .steps{ margin-top:38px; display:grid; gap:14px; max-width:640px; }
+  .stepline{ display:flex; gap:16px; align-items:flex-start; padding:16px 0; border-top:1px solid var(--line); }
+  .stepline .n{ font-family:"Space Mono",monospace; font-size:12px; color:var(--g2); flex:none; padding-top:2px; }
+  .stepline .tx b{ display:block; font-weight:700; margin-bottom:3px; } .stepline .tx span{ color:var(--g1); font-size:.95rem; }
+  .cta{ display:inline-flex; align-items:center; gap:12px; margin-top:40px; background:transparent; color:var(--paper); border:1px solid var(--paper);
+    font-family:"Space Mono",monospace; text-transform:uppercase; letter-spacing:.14em; font-weight:700; font-size:.82rem; padding:16px 26px; text-decoration:none; transition:.2s; width:fit-content; }
+  .cta:hover{ background:var(--paper); color:#0A0A0A; }
+  .foot{ font-family:"Space Mono",monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:rgba(250,250,250,.3); }
+  @media (max-width:640px){ .frame{ inset:12px; } .wrap{ padding:34px 22px; } }
+</style>
+</head>
+<body>
+<div class="frame"></div>
+<div class="wrap">
+  <div class="bar">
+    <img src="./public/logos/wordmark.png" alt="The New Standard">
+    <div class="status"><span class="dot"></span>Application under review</div>
+  </div>
+
+  <div class="core">
+    <div class="kick">Inner circle · By invitation</div>
+    <h1>Your application<br>is under review<span class="dim">, <span id="nm">.</span></span></h1>
+    <p class="lede">You are already moving. That puts you in consideration for the smallest, sharpest room we run, and that room is application-only for a reason. Our team reviews these by hand. If there is a fit, we reach out directly to open the conversation.</p>
+
+    <div class="steps">
+      <div class="stepline"><span class="n">01</span><div class="tx"><b>Personal review</b><span>Our team reviews every ELITE application by hand. No automated funnel.</span></div></div>
+      <div class="stepline"><span class="n">02</span><div class="tx"><b>A direct conversation</b><span>If it is a fit, we reach out within 48 hours to talk properly.</span></div></div>
+      <div class="stepline"><span class="n">03</span><div class="tx"><b>The room that keeps you honest</b><span>Direct access, masterminds, and a peer network operating at your level.</span></div></div>
+    </div>
+
+    <a class="cta" href="index.html">Back to The New Standard <span>&rarr;</span></a>
+  </div>
+
+  <div class="foot">The New Standard · Inner circle</div>
+</div>
+<script>
+  const n = new URLSearchParams(location.search).get('n');
+  document.getElementById('nm').textContent = n ? (n + '.') : 'operator.';
+</script>
+</body>
+</html>
